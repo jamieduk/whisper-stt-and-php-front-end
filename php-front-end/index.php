@@ -43,9 +43,8 @@ button{margin-top:10px;padding:10px 20px;border:none;border-radius:10px;cursor:p
   background-color: #666;
 }
 
-
-
 </style>
+
 </head>
 <body>
 <h2>🎧 AI Voice Chatbot</h2>
@@ -84,6 +83,12 @@ document.getElementById("clearBtn").addEventListener("click",()=>{
 </script>
 
 <script>
+// Auto-scrolls chatBox to bottom
+function scrollChatBox(){
+  const chatBox=document.getElementById("chatBox");
+  chatBox.scrollTop=chatBox.scrollHeight;
+}
+
 // ---- Wait for full page and ignore Cloudflare Rocket Loader ----
 function initChatbot(){
   console.log("🚀 Initializing chatbot JS...");
@@ -150,6 +155,7 @@ function initChatbot(){
 
     chatBox.value+="\n[🎤 Mic Active]\n";
     console.log("🎧 Mic active and monitoring for silence...");
+    scrollChatBox();
   }
 
   async function getMicStream(){
@@ -195,33 +201,39 @@ function initChatbot(){
     chatBox.value+="\n[⏹ Recording stopped]";
   }
 
-  async function processAudio(){
-    const blob=new Blob(audioChunks,{type:"audio/webm"});
-    console.log("⏳ Sending audio to server for transcription...");
-    chatBox.value+="\n[⏳ Transcribing audio...]";
 
-    const formData=new FormData();
-    formData.append("file",blob,"speech.webm");
+async function processAudio(){
+  const blob=new Blob(audioChunks,{type:"audio/webm"});
+  console.log("⏳ Sending audio to server for transcription...");
+  chatBox.value+="\n[⏳ Transcribing audio...]";
+  scrollChatBox();
 
-    try{
-      const res=await fetch("transcribe.php",{method:"POST",body:formData});
-      const data=await res.json();
-      if(data.text){
-        console.log("🗣 Transcription result:",data.text);
-        chatBox.value+=`\nYou: ${data.text}\n`;
-        const response="(Dummy reply for now)";
-        chatBox.value+=`\nBot: ${response}\n`;
-        console.log("💬 Dummy bot response sent");
-        speak(response);
-      }else{
-        console.warn("❌ No transcription result received");
-        chatBox.value+="\n[❌ No transcription result]";
-      }
-    }catch(err){
-      console.error("[⚠️ Network Error]",err);
-      chatBox.value+=`\n[⚠️ Network Error] ${err}`;
+  const formData=new FormData();
+  formData.append("file",blob,"speech.webm");
+
+  try{
+    const res=await fetch("transcribe.php",{method:"POST",body:formData});
+    const data=await res.json();
+    if(data.text){
+      console.log("🗣 Transcription result:",data.text);
+      chatBox.value+=`\nYou: ${data.text}\n`;
+      scrollChatBox();
+      const response="(Dummy reply for now)";
+      chatBox.value+=`\nBot: ${response}\n`;
+      scrollChatBox();
+      console.log("💬 Dummy bot response sent");
+      speak(response);
+    }else{
+      console.warn("❌ No transcription result received");
+      chatBox.value+="\n[❌ No transcription result]";
+      scrollChatBox();
     }
+  }catch(err){
+    console.error("[⚠️ Network Error]",err);
+    chatBox.value+=`\n[⚠️ Network Error] ${err}`;
+    scrollChatBox();
   }
+}
 
   function speak(text){
     const utter=new SpeechSynthesisUtterance(text);
