@@ -11,7 +11,7 @@ body{background:#111;color:#eee;font-family:sans-serif;display:flex;flex-directi
   scrollbar-color: #444 #111;
   scrollbar-width: thin;
   }
-textarea{width:80%;height:150px;background:#222;color:#0f0;padding:10px;border:1px solid #333;border-radius:10px;font-size:16px;resize:none}
+textarea{width:50%;height:350px;background:#222;color:#0f0;padding:10px;border:1px solid #333;border-radius:10px;font-size:16px;resize:none}
 button{margin-top:10px;padding:10px 20px;border:none;border-radius:10px;cursor:pointer;font-size:16px}
 #listenBtn,#clearBtn,#copyBtn{background:#333;color:#fff}
 #listenBtn.active,#clearBtn:active,#copyBtn:active{background:#0a0;color:#000}
