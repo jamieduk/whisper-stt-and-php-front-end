@@ -13,8 +13,8 @@ body{background:#111;color:#eee;font-family:sans-serif;display:flex;flex-directi
   }
 textarea{width:80%;height:150px;background:#222;color:#0f0;padding:10px;border:1px solid #333;border-radius:10px;font-size:16px;resize:none}
 button{margin-top:10px;padding:10px 20px;border:none;border-radius:10px;cursor:pointer;font-size:16px}
-#listenBtn,#copyBtn{background:#333;color:#fff}
-#listenBtn.active,#copyBtn:active{background:#0a0;color:#000}
+#listenBtn,#clearBtn,#copyBtn{background:#333;color:#fff}
+#listenBtn.active,#clearBtn:active,#copyBtn:active{background:#0a0;color:#000}
 /* (c) J~Net 2025
    Global Dark Scrollbar Theme */
 
@@ -54,6 +54,7 @@ button{margin-top:10px;padding:10px 20px;border:none;border-radius:10px;cursor:p
 
 <button id="copyBtn" class="inputbtn">Copy</button>
 
+<button id="clearBtn" class="inputbtn">Clear</button>
 
 <script>
 // ✅ Copy to Clipboard for textarea
@@ -69,6 +70,17 @@ document.getElementById("copyBtn").addEventListener("click",()=>{
     console.error("Clipboard error:",err);
   });
 });
+
+// ✅ Clear #chatBox content
+document.getElementById("clearBtn").addEventListener("click",()=>{
+  const chatBox=document.getElementById("chatBox");
+  chatBox.value="";
+  const btn=document.getElementById("clearBtn");
+  const old=btn.textContent;
+  btn.textContent="Cleared!";
+  setTimeout(()=>btn.textContent=old,1000);
+});
+
 </script>
 
 <script>
