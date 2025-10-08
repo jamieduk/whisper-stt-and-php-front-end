@@ -60,6 +60,10 @@ https://github.com/ggml-org/whisper.cpp/assets/1991296/c82e8f86-60dc-49f2-b048-d
 First clone the repository:
 
 ```bash
+# Auto
+sudo chmod +x setup.sh && bash setup.sh
+
+# Manual Method
 git clone https://github.com/ggml-org/whisper.cpp.git
 git clone https://github.com/jamieduk/whisper-stt-and-php-front-end.git
 sudo mv whisper-stt-and-php-front-end/{*,.*} whisper.cpp/ 2>/dev/null
