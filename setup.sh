@@ -4,6 +4,8 @@
 #
 #
 echo "Starting Setup..."
+sudo apt install -y git sox pipewire pipewire-pulse wireplumber
+
 git clone https://github.com/ggml-org/whisper.cpp.git
 git clone https://github.com/jamieduk/whisper-stt-and-php-front-end.git
 sudo mv whisper-stt-and-php-front-end/{*,.*} whisper.cpp/ 2>/dev/null
